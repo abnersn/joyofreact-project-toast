@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '../Button';
 
+import { ToastContext } from '../ToastProvider';
 import ToastShelf from '../ToastShelf/ToastShelf';
 import styles from './ToastPlayground.module.css';
 
@@ -10,11 +11,12 @@ const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 function ToastPlayground() {
   const [message, setMessage] = React.useState('')
   const [variant, setVariant] = React.useState('notice')
-  const [toastsList, setToastsList] = React.useState([])
+
+  const { addToast } = React.useContext(ToastContext)
 
   const handlePop = () => {
-    setToastsList([...toastsList, { id: Math.random(), message, variant }]);
-    setMessage('');
+    console.log('i ran')
+    addToast(message, variant);
   }
 
   return (
@@ -24,10 +26,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {toastsList.length > 0 && <ToastShelf
-        toastsList={toastsList}
-        setToastsList={setToastsList}
-      />}
+      <ToastShelf />
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
@@ -74,7 +73,9 @@ function ToastPlayground() {
           <div
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            <Button onClick={handlePop}>Pop Toast!</Button>
+            <Button
+              onClick={handlePop}
+            >Pop Toast!</Button>
           </div>
         </div>
       </div>
