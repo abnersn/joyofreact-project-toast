@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '../Button';
-import Toast from '../Toast';
 
+import ToastShelf from '../ToastShelf/ToastShelf';
 import styles from './ToastPlayground.module.css';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
@@ -10,7 +10,11 @@ const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 function ToastPlayground() {
   const [message, setMessage] = React.useState('')
   const [variant, setVariant] = React.useState('notice')
-  const [preview, setPreview] = React.useState(null)
+  const [toastsList, setToastsList] = React.useState([])
+
+  const handlePop = () => {
+    setToastsList([...toastsList, { message, variant }]);
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -19,10 +23,9 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {preview && <Toast
-        variant={variant}
-        message={message}
-        onDismiss={() => setPreview(null)}
+      {toastsList.length > 0 && <ToastShelf
+        toastsList={toastsList}
+        setToastsList={setToastsList}
       />}
 
       <div className={styles.controlsWrapper}>
@@ -70,7 +73,7 @@ function ToastPlayground() {
           <div
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            <Button onClick={() => setPreview(message)}>Pop Toast!</Button>
+            <Button onClick={handlePop}>Pop Toast!</Button>
           </div>
         </div>
       </div>
