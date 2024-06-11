@@ -3,7 +3,8 @@ import React from 'react';
 export const ToastContext = React.createContext({
   toastsList: [],
   addToast() { },
-  dismissToast() { }
+  dismissToast() { },
+  clearToasts() { }
 });
 
 function ToastProvider({ children }) {
@@ -17,8 +18,12 @@ function ToastProvider({ children }) {
     setToastsList((list) => list.filter((t) => t.id !== id))
   }
 
+  const clearToasts = () => {
+    setToastsList([]);
+  }
+
   return <ToastContext.Provider value={{
-    toastsList, addToast, dismissToast
+    toastsList, addToast, dismissToast, clearToasts
   }}>{children}</ToastContext.Provider>;
 }
 

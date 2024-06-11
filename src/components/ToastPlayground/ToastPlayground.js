@@ -12,7 +12,18 @@ function ToastPlayground() {
   const [message, setMessage] = React.useState('')
   const [variant, setVariant] = React.useState('notice')
 
-  const { addToast } = React.useContext(ToastContext)
+  const { addToast, clearToasts } = React.useContext(ToastContext)
+
+  React.useEffect(() => {
+    const handleEsc = (ev) => {
+      if (ev.key === 'Escape') {
+        clearToasts();
+      }
+    }
+    window.addEventListener('keydown', handleEsc);
+
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   const handlePop = () => {
     console.log('i ran')
