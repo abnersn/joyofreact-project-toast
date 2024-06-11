@@ -13,7 +13,8 @@ function ToastPlayground() {
   const [toastsList, setToastsList] = React.useState([])
 
   const handlePop = () => {
-    setToastsList([...toastsList, { message, variant }]);
+    setToastsList([...toastsList, { id: Math.random(), message, variant }]);
+    setMessage('');
   }
 
   return (

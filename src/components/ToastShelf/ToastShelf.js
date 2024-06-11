@@ -4,15 +4,15 @@ import Toast from '../Toast';
 import styles from './ToastShelf.module.css';
 
 function ToastShelf({ toastsList, setToastsList }) {
-  const handleDismiss = (idx) => {
-    setToastsList((list) => list.filter((_, i) => i !== idx))
+  const handleDismiss = (id) => {
+    setToastsList((list) => list.filter((t) => t.id !== id))
   }
   return (
     <ol className={styles.wrapper}>
-      {toastsList.map((toast, i) => (
-        <li className={styles.toastWrapper} key={i}>
+      {toastsList.map((toast) => (
+        <li className={styles.toastWrapper} key={toast.id}>
           <Toast
-            onDismiss={() => handleDismiss(i)}
+            onDismiss={() => handleDismiss(toast.id)}
             variant={toast.variant}
           >
             {toast.message}
